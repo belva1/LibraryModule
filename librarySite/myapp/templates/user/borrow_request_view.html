@@ -1,0 +1,55 @@
+{%extends 'base.html'%}
+
+{%block title%}
+Request | Library
+{%endblock%}
+
+{%block name%}
+<b>Request | Library</b>
+{%endblock%}
+
+
+{%block content%}
+<ul class="list-group" style="margin-left: 10px; margin-right: 10px">
+    <li class="list-group-item mt-4">
+        <b>{{borrow_request}}</b><br>
+        <p><b>Request status:</b> {{borrow_request.get_status_display }}</p>
+        {%if borrow_request.status == 5%}
+        <b style="color: red">Request declined</b>
+        {%else%}
+        {%if borrow_request.status == 1%}
+        <b>Please, wait for approve or decline.</b>
+        {%elif borrow_request.status == 2%}
+        <b>You can take book: <a href="{%url 'book_detail_view' isbn=borrow_request.book.isbn%}">{{borrow_request.book}}</a></b>
+        {%elif borrow_request.status == 3%}
+        <p><b>You have the book, enjoy reading!</b></p>
+        <a style="margin-bottom: 16px" href="{%url 'return_book_view' id=borrow_request.id%}" class="btn btn-outline-dark">Return book</a>
+        {%elif borrow_request.status == 4%}
+        {%if not borrow_request.overdue%}
+        <b style="color: green">Request completed in time.</b>
+        {%else%}
+        <b style="color: green">Request completed <u>with delay</u>.</b>
+        {%endif%}
+        {%endif%}
+        <div class="card-subtitle text-muted mb-3">
+            <small>Request Date: {{borrow_request.request_date}}</small>
+        </div>
+        {%if borrow_request.approval_date%}
+        <div class="card-subtitle text-muted mb-3">
+            <small>Approval Date: {{borrow_request.approval_date}}</small>
+        </div>
+        {%endif%}
+        {%if borrow_request.due_date%}
+        <div class="card-subtitle text-muted mb-3">
+            <small>Due Date: {{borrow_request.due_date}}</small>
+        </div>
+        {%endif%}
+        {%if borrow_request.complete_date%}
+        <div class="card-subtitle text-muted mb-3">
+            <small>Complete Date: {{borrow_request.complete_date}}</small>
+        </div>
+        {%endif%}
+        {%endif%}
+    </li>
+</ul>
+{%endblock%}

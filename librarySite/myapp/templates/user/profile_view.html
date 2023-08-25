@@ -1,0 +1,49 @@
+{%extends 'base.html'%}
+
+{%block title%}
+Profile | Library
+{%endblock%}
+
+{%block name%}
+<b>Profile | Library</b>
+{%endblock%}
+
+
+{%block content%}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="card-title">{{user.username}}</h1>
+                    <p class="card-text"><b>Email: </b>{{user.email}}</p>
+                    <p class="card-text"><b>First Name: </b>{{user.first_name}}</p>
+                    <p class="card-text"><b>Last Name: </b>{{user.last_name}}</p>
+                    {%if user_requests%}
+                    <b>Requests:</b>
+                    <ul>
+                        {%for request in user_requests%}
+                        <li style="margin-top: 6px"><a href="{%url 'borrow_request_view' id=request.id%}">{{request}}</a></li>
+                        {%endfor%}
+                    </ul>
+                    {%endif%}
+                    {%if user.is_librarian%}
+                    {%if borrow_requests%}
+                    <b>Request to approve / decline:</b>
+                    <lu>
+                        {%for request in borrow_requests%}
+                        <li style="margin-top: 12px">
+                            <a>{{request}}</a>
+                            <a href="{%url 'request_approve_view' id=request.id%}" class="btn btn-outline-success">Approve</a>
+                            <a href="{%url 'request_decline_view' id=request.id%}" class="btn btn-outline-danger">Decline</a>
+                        </li>
+                        {%endfor%}
+                    </lu>
+                    {%endif%}
+                    {%endif%}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock%}

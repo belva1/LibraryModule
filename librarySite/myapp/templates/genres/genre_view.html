@@ -1,0 +1,32 @@
+{%extends 'base.html'%}
+
+{%block title%}
+Genre | Library
+{%endblock%}
+
+{%block name%}
+<b>Genre | Library</b>
+{%endblock%}
+
+
+{%block content%}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <h1>{{genre.name}}</h1>
+                    {% for book in books %}
+                        <li><a href="{% url 'book_detail_view' isbn=book.isbn %}">{{ book.title }}</a></li>
+                    {% endfor %}
+                    {%if request.user.is_librarian or request.user.is_staff%}
+                    <a style="margin-top: 9px" class="btn btn-outline-dark" href="{%url 'update_genre_view' name=genre.name%}">Update</a>
+                    <a style="margin-top: 9px" class="btn btn-outline-dark" href="{%url 'delete_genre_view' name=genre.name%}">Delete</a>
+                    {%endif%}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{%endblock%}

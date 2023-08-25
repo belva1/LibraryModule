@@ -1,0 +1,44 @@
+{%extends 'base.html'%}
+
+{%block title%}
+Main | Library
+{%endblock%}
+
+{%block name%}
+<b>Main | Library</b>
+{%endblock%}
+
+
+{%block content%}
+{%for book in books%}
+<ul class="list-group" style="margin-left: 10px; margin-right: 10px">
+    <li class="list-group-item mt-4">
+        <h2><span>Title: {{book.title}}</span><br></h2>
+        {%if book.authors.all|length > 1%}
+        <b>Authors:</b>
+        {%else%}
+        <b>Author:</b>
+        {%endif%}
+            {%for author in book.authors.all%}
+            <a href="{%url 'author_view' name=author.name%}">{{author}}</a>
+            {%endfor%}
+        <br><b>Genre:</b>
+            {%for genre in book.genre.all%}
+            <a>{{genre}}</a>
+            {%endfor%}
+        <br>
+        <b>Published date: </b>{{book.published_date}}<br>
+        <b>ISBN: </b>{{book.isbn}}<br>
+        <b>Is available: </b>
+        {%if book.available%}
+        Yes
+        {%else%}
+        No
+        {%endif%}
+        <br>
+        <span><b>Summary: </b>{{book.summary|truncatechars:'30'}}</span><br>
+        <span class="float-right mr-3"><a href="{%url 'book_detail_view' isbn=book.isbn%}">Full version</a></span>
+    </li>
+</ul>
+{%endfor%}
+{%endblock%}
