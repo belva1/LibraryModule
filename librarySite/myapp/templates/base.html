@@ -31,7 +31,6 @@
                 <li><a class="dropdown-item" href="{%url 'change_user_data_view'%}">Change User Data</a></li>
                 <li><a class="dropdown-item" href="{%url 'change_password_view'%}">Change Password</a></li>
                 <li><a class="dropdown-item" href="{%url 'logout_view' %}">Log Out</a></li>
-                <li><a class="dropdown-item" href="#">Deactivate</a></li>
                 {%else%}
                 <li><a class="dropdown-item" href="{%url 'login_view' %}">Login</a></li>
                 <li><a class="dropdown-item" href="{%url 'register_view' %}">Registration</a></li>
@@ -60,10 +59,6 @@
               </ul>
             </li>
             {%endif%}
-            <li class="nav-item">
-              {%url 'about_view' as url_about_view%}
-              <a class="nav-link {% if url_about_view == request.path%}active{%endif%}" href="{{url_about_view}}">about link</a>
-            </li>
           </ul>
 
           <span class="navbar-text">

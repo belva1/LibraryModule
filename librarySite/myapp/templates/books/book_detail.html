@@ -50,6 +50,7 @@ Book | Library
                     <div class="card-subtitle text-muted mb-3">
                         <small>Published Date: {{book.published_date}}</small>
                     </div>
+                    {%if request.user.is_authenticated%}
                     <a class="btn btn-outline-dark" href="{%url 'create_borrow_request_view' isbn=book.isbn%}">Borrow Request</a>
                     {%if borrow_request and borrow_request.status == 2 and borrow_request.book.available%}
                     <a class="btn btn-outline-primary" href="{%url 'take_book_view' id=borrow_request.id%}">Take Book</a>
@@ -60,6 +61,7 @@ Book | Library
                         <a style="margin-top: 9px" class="btn btn-outline-dark" href="{%url 'delete_book_view' isbn=book.isbn%}">Delete</a>
                     {%endif%}
                     </p>
+                    {%endif %}
 
                 </div>
             </div>

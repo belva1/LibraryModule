@@ -16,6 +16,9 @@ Genre | Library
             <div class="card">
                 <div class="card-body">
                     <h1>{{genre.name}}</h1>
+                    {%if not books%}
+                    <p>There are no books of this genre.</p>
+                    {%endif%}
                     {% for book in books %}
                         <li><a href="{% url 'book_detail_view' isbn=book.isbn %}">{{ book.title }}</a></li>
                     {% endfor %}

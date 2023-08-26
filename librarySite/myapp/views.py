@@ -79,10 +79,11 @@ class BookDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         user = self.request.user
         book = self.get_object()
-        try:
-            context['borrow_request'] = BorrowRequestModel.objects.get(borrower=user, book=book)
-        except BorrowRequestModel.DoesNotExist:
-            context['borrow_request'] = None
+        if self.request.user.is_authenticated:
+            try:
+                context['borrow_request'] = BorrowRequestModel.objects.get(borrower=user, book=book)
+            except BorrowRequestModel.DoesNotExist:
+                context['borrow_request'] = None
 
         return context
 

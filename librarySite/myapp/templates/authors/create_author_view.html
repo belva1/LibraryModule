@@ -1,11 +1,11 @@
 {%extends 'base.html'%}
 
 {%block title%}
-Create | Library
+Create author | Library
 {%endblock%}
 
 {%block name%}
-<b>Create | Library</b>
+<b>Create author | Library</b>
 {%endblock%}
 
 
@@ -33,7 +33,7 @@ Create | Library
         {{form.errors}}
         <button form="add_form" type="submit" class="btn btn-outline-secondary mt-4">Create</button>
     </form>
-    <a class="btn btn-outline-primary" href="{%url 'main_view'%}">Back</a>
+        <a class="btn btn-outline-primary" href="{%url 'main_view'%}">Cancel</a>
 </div>
 
 </body>
