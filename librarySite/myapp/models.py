@@ -25,7 +25,7 @@ class Author(models.Model):
 class Book(models.Model):
     title = models.CharField(max_length=255, unique=True)
     summary = models.TextField()
-    isbn = models.CharField(unique=True)
+    isbn = models.CharField(max_length=13, unique=True)
     available = models.BooleanField(default=True)
     published_date = models.DateField()
     publisher = models.CharField(max_length=255)

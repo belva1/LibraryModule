@@ -5,7 +5,7 @@ Author | Library
 {%endblock%}
 
 {%block name%}
-<b>Author | Library</b>
+<b style="font-size: 20px;">Author | Library</b>
 {%endblock%}
 
 
@@ -13,13 +13,15 @@ Author | Library
 <div class="container mt-5">
     <div class="row">
         <div class="col-md-8 mx-auto">
-            <div class="card">
+            <div class="card" style="border-color: #ccc; background-color: #2b3035; color: #f5f5f5;">
                 <div class="card-body">
-                    <p class="card-text"><b>Author - </b>{{author.name}}</p>
-                    <p class="card-text"><b>Bio - </b>{{author.bio}}</p>
+                    <p class="card-text" style="color: #808080; font-size: 40px; font-family: 'Monotype Corsiva', cursive; transform: skewX(-15deg); margin-bottom: 0;"><b >Author: {{author.name}}</b></p>
+                    <p class="card-text" style="font-size: 18px; margin-top: 5px;"><b>Biography:</b><br>{{author.bio}}</p>
                     {%if request.user.is_librarian or request.user.is_staff%}
-                    <a style="margin-top: 9px" class="btn btn-outline-dark" href="{%url 'update_author_view' name=author.name%}">Update</a>
-                    <a style="margin-top: 9px" class="btn btn-outline-dark" href="{%url 'delete_author_view' name=author.name%}">Delete</a>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-top: 15px;">
+                        <a href="{% url 'update_author_view' name=author.name %}" class="btn btn-outline-dark" style="color: white;">Update</a>
+                        <a href="{% url 'delete_author_view' name=author.name %}" class="btn btn-outline-danger" style="color: white; margin-left: 10px;">Delete</a>
+                    </div>
                     {%endif%}
                 </div>
             </div>
@@ -27,3 +29,5 @@ Author | Library
     </div>
 </div>
 {%endblock%}
+
+

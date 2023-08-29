@@ -5,40 +5,44 @@ Main | Library
 {%endblock%}
 
 {%block name%}
-<b>Main | Library</b>
+<b style="font-size: 20px;">Main | Library</b>
 {%endblock%}
-
 
 {%block content%}
 {%for book in books%}
-<ul class="list-group" style="margin-left: 10px; margin-right: 10px">
-    <li class="list-group-item mt-4">
-        <h2><span>Title: {{book.title}}</span><br></h2>
-        {%if book.authors.all|length > 1%}
-        <b>Authors:</b>
-        {%else%}
-        <b>Author:</b>
-        {%endif%}
-            {%for author in book.authors.all%}
-            <a href="{%url 'author_view' name=author.name%}">{{author}}</a>
-            {%endfor%}
-        <br><b>Genre:</b>
-            {%for genre in book.genre.all%}
-            <a>{{genre}}</a>
-            {%endfor%}
-        <br>
-        <b>Published date: </b>{{book.published_date}}<br>
-        <b>ISBN: </b>{{book.isbn}}<br>
-        <b>Is available: </b>
-        {%if book.available%}
-        Yes
-        {%else%}
-        No
-        {%endif%}
-        <br>
-        <span><b>Summary: </b>{{book.summary|truncatechars:'30'}}</span><br>
-        <span class="float-right mr-3"><a href="{%url 'book_detail_view' isbn=book.isbn%}">Full version</a></span>
-    </li>
-</ul>
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card" style="border-color: #ccc; background-color: #2b3035; color: #f5f5f5;">
+                <div class="card-body">
+                    <h2 class="card-title" style="color: #808080; font-size: 40px; font-weight: bold; font-family: 'Monotype Corsiva', cursive; transform: skewX(-15deg);">Title: {{ book.title }}</h2>
+                    {%if book.authors.all|length > 1%}
+                    <p class="card-text" style="font-weight: bold;">Authors:</p>
+                    {%else%}
+                    <p class="card-text" style="font-weight: bold;">Author:</p>
+                    {%endif%}
+                    <p class="card-text">
+                        {%for author in book.authors.all%}
+                        <a href="{% url 'author_view' name=author.name %}" style="text-decoration: none; font-weight: bold;">{{author}}</a>{% if not forloop.last %}, {%endif%}
+                        {%endfor%}
+                    </p>
+                    <p class="card-text" style="font-weight: bold;">Genre:</p>
+                    <p class="card-text">
+                        {%for genre in book.genre.all%}
+                        <a style="text-decoration: none; font-weight: bold;" href="{% url 'genre_view' name=genre.name %}">{{genre}}</a>{% if not forloop.last %}, {%endif%}
+                        {%endfor%}
+                    </p>
+                    <p class="card-text"><b style="font-weight: bold;">Published date: </b><a style="font-family: 'Monotype Corsiva', cursive; transform: skewX(-15deg);">{{book.published_date}}</a></p>
+                    <p class="card-text"><b style="font-weight: bold;">ISBN: </b>{{book.isbn}}</p>
+                    <p class="card-text"><b style="font-weight: bold;">Is available: </b>{%if book.available%}<a style="color: #006400;">Yes</a>{%else%}<a style="color: #800000;">No</a>{%endif%}</p>
+                    <p class="card-text"><b style="font-weight: bold;">Summary: </b>{{book.summary|truncatechars:'30'}}</p>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="{% url 'book_detail_view' isbn=book.isbn %}" class="btn btn-outline-secondary" style="color: white;">Full version</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {%endfor%}
 {%endblock%}

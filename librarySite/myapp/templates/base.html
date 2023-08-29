@@ -12,7 +12,7 @@
     <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
       <div class="container-fluid">
         {%url 'main_view' as url_main_view%}
-        <a class="navbar-brand {% if url_main_view == request.path%}active{%endif%}" href="{{url_main_view}}">Main Page</a>
+        <a class="navbar-brand {% if url_main_view == request.path%}active{%endif%}" href="{{url_main_view}}"><b>Main Page</b></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -20,7 +20,7 @@
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Profile Settings
+                <b>Profile Settings</b>
               </a>
               <ul class="dropdown-menu">
                 {%if request.user.is_authenticated%}
@@ -33,13 +33,13 @@
                 <li><a class="dropdown-item" href="{%url 'logout_view' %}">Log Out</a></li>
                 {%else%}
                 <li><a class="dropdown-item" href="{%url 'login_view' %}">Login</a></li>
-                <li><a class="dropdown-item" href="{%url 'register_view' %}">Registration</a></li>
+                <li><a class="dropdown-item" href="{%url 'register_view' %}">Register</a></li>
                 {%endif%}
               </ul>
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Genres
+                <b>Genres</b>
               </a>
               <ul class="dropdown-menu">
                 {%for genre in genres%}
@@ -47,15 +47,25 @@
                 {%endfor%}
               </ul>
             </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <b>Authors</b>
+              </a>
+              <ul class="dropdown-menu">
+                {%for author in authors%}
+                <li><a class="dropdown-item" href="{%url 'author_view' name=author.name%}">{{author.name}}</a></li>
+                {%endfor%}
+              </ul>
+            </li>
             {%if request.user.is_librarian or request.user.is_staff%}
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Create
+                <b>Create</b>
               </a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{%url 'create_genre_view'%}">Create genre</a></li>
-                <li><a class="dropdown-item" href="{%url 'create_author_view'%}">Create author</a></li>
-                <li><a class="dropdown-item" href="{%url 'create_book_view'%}">Create book</a></li>
+                <li><a class="dropdown-item" href="{%url 'create_genre_view'%}">Create Genre</a></li>
+                <li><a class="dropdown-item" href="{%url 'create_author_view'%}">Create Author</a></li>
+                <li><a class="dropdown-item" href="{%url 'create_book_view'%}">Create Book</a></li>
               </ul>
             </li>
             {%endif%}
@@ -63,7 +73,7 @@
 
           <span class="navbar-text">
             {%block name%}
-              <p>Base | Blog</p>
+              <b style="font-size: 20px;">Base | Library</b>
             {%endblock%}
           </span>
         </div>

@@ -1,11 +1,11 @@
 {%extends 'base.html'%}
 
 {%block title%}
-Create book | Library
+Create Book | Library
 {%endblock%}
 
 {%block name%}
-<b>Create book | Library</b>
+<b style="font-size: 20px;">Create Book | Library</b>
 {%endblock%}
 
 
@@ -19,9 +19,10 @@ Create book | Library
             Create Book
         </div>
         {{form}}
-        <button form="add_form" type="submit" class="btn btn-outline-secondary mt-4">Create</button>
+        <button form="add_form" type="submit" class="btn btn-outline-secondary mt-4" style="margin-bottom: 25px;">Create</button>
+        <a class="btn btn-outline-primary" href="{%url 'main_view'%}">Cancel</a>
     </form>
-    <a class="btn btn-outline-primary" href="{%url 'main_view'%}">Cancel</a>
+
 </div>
 
 </body>

@@ -5,64 +5,68 @@ Book | Library
 {%endblock%}
 
 {%block name%}
-<b>Book | Library</b>
+<b style="font-size: 20px;">Book | Library</b>
 {%endblock%}
 
 
 {%block content%}
-
 <div class="container mt-5">
     <div class="row">
         <div class="col-md-8 mx-auto">
-            <div class="card">
+            <div class="card" style="border-color: #ccc; background-color: #2b3035; color: #f5f5f5;">
                 <div class="card-body">
-                    <h2 class="card-title">Book Title: {{book.title}}</h2>
+                    <h2 class="card-title" style="color: #808080; font-size: 40px; font-family: 'Monotype Corsiva', cursive; transform: skewX(-15deg); margin-bottom: 0;"><b>Book Title: {{book.title}}</b></h2>
                     {%if book.genre.all|length > 1%}
-                    <p><b>Genres:</b>
+                    <p style="font-size: 18px;"><b>Genres:</b></p>
                     {%else%}
-                    <p><b>Genre:</b>
+                    <p style="font-size: 18px;"><b>Genre:</b></p>
                     {%endif%}
-                    {%for genre in book.genre.all%}
-                    <a href="{%url 'genre_view' name=genre.name%}">{{genre}}</a>
-                    {%endfor%}
-                    </p>
                     <p>
+                        {%for genre in book.genre.all%}
+                        <a href="{% url 'genre_view' name=genre.name %}" style="color: #f5f5f5;">{{genre}}</a>
+                        {%endfor%}
+                    </p>
+                    <p style="font-size: 18px;">
                         {%if book.authors.all|length > 1%}
                         <b>Authors:</b>
                         {%else%}
                         <b>Author:</b>
                         {%endif%}
                         {%for author in book.authors.all%}
-                            <a href="{%url 'author_view' name=author.name%}">{{author}}</a>
+                        <a href="{% url 'author_view' name=author.name %}" style="color: #f5f5f5;">{{ author }}</a>
                         {%endfor%}
                     </p>
-                    <p><b>ISBN:</b> {{book.isbn}}</p>
-
-                    <p class="card-text"><b>Summary:<br></b> {{book.summary}}</p>
-                    <p><b>Publisher:</b> {{book.publisher}}</p>
-                    <p><b>Is available:</b>
-                    {%if book.available%}
+                    <p style="font-size: 18px;"><b>ISBN:</b> {{book.isbn}}</p>
+                    <p class="card-text" style="font-size: 18px;"><b>Summary:<br></b> {{book.summary}}</p>
+                    <p style="font-size: 18px;"><b>Publisher:</b> {{book.publisher}}</p>
+                    <p style="font-size: 18px;"><b>Is available:</b>
+                        {%if book.available%}
                         <b style="color: green">YES</b>
-                    {%else%}
+                        {%else%}
                         <b style="color: red">NO</b>
-                    {%endif%}
+                        {%endif%}
                     </p>
                     <div class="card-subtitle text-muted mb-3">
-                        <small>Published Date: {{book.published_date}}</small>
+                        <small style="font-size: 16px; color: white;">Published Date: {{book.published_date}}</small>
                     </div>
                     {%if request.user.is_authenticated%}
-                    <a class="btn btn-outline-dark" href="{%url 'create_borrow_request_view' isbn=book.isbn%}">Borrow Request</a>
+                    {%if borrow_request.status == 2%}
+                    <p style="font-size: 18px;">The borrow request has been approved. You can take the book.</p>
+                    {%else%}
+                    {%if not request.user.is_librarian and not request.user.is_staff%}
+                    <a class="btn btn-outline-dark" href="{% url 'create_borrow_request_view' isbn=book.isbn %}" style="color: white;">Borrow Request</a>
+                    {%endif%}
+                    {%endif%}
                     {%if borrow_request and borrow_request.status == 2 and borrow_request.book.available%}
-                    <a class="btn btn-outline-primary" href="{%url 'take_book_view' id=borrow_request.id%}">Take Book</a>
+                    <a class="btn btn-outline-primary" href="{% url 'take_book_view' id=borrow_request.id %}" style="color: white;">Take Book</a>
                     {%endif%}
                     <p>
-                    {%if request.user.is_librarian or request.user.is_staff%}
-                        <a style="margin-top: 9px" class="btn btn-outline-dark" href="{%url 'update_book_view' isbn=book.isbn%}">Update</a>
-                        <a style="margin-top: 9px" class="btn btn-outline-dark" href="{%url 'delete_book_view' isbn=book.isbn%}">Delete</a>
-                    {%endif%}
+                        {%if request.user.is_librarian or request.user.is_staff%}
+                        <a style="margin-top: 9px; font-size: 18px; color: white;" class="btn btn-outline-dark" href="{% url 'update_book_view' isbn=book.isbn %}">Update</a>
+                        <a style="margin-top: 9px; font-size: 18px; color: white;" class="btn btn-outline-danger" href="{% url 'delete_book_view' isbn=book.isbn %}">Delete</a>
+                        {%endif%}
                     </p>
-                    {%endif %}
-
+                    {%endif%}
                 </div>
             </div>
         </div>

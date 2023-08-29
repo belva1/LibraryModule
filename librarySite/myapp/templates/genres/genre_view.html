@@ -5,7 +5,7 @@ Genre | Library
 {%endblock%}
 
 {%block name%}
-<b>Genre | Library</b>
+<b style="font-size: 20px;">Genre | Library</b>
 {%endblock%}
 
 
@@ -13,23 +13,27 @@ Genre | Library
 <div class="container mt-5">
     <div class="row">
         <div class="col-md-8 mx-auto">
-            <div class="card">
+            <div class="card" style="border-color: #ccc; background-color: #2b3035; color: #f5f5f5;">
                 <div class="card-body">
-                    <h1>{{genre.name}}</h1>
+                    <h1 class="card-title" style="color: #808080; font-size: 40px; font-family: 'Monotype Corsiva', cursive; transform: skewX(-15deg); margin-bottom: 0;"><b>Genre: {{ genre.name }}</b></h1>
                     {%if not books%}
-                    <p>There are no books of this genre.</p>
+                    <p class="card-text">There are no books of this genre.</p>
                     {%endif%}
-                    {% for book in books %}
-                        <li><a href="{% url 'book_detail_view' isbn=book.isbn %}">{{ book.title }}</a></li>
-                    {% endfor %}
+                    <p class="card-text" style="font-size: 18px; margin-top: 5px;"><b>Books of this genre:</b></p>
+                    <ul class="list-group">
+                        {%for book in books%}
+                        <li class="list-group-item" style="background-color: #2b3035; color: #f5f5f5; border-color: #2b3035;"><a href="{% url 'book_detail_view' isbn=book.isbn %}" style="color: #f5f5f5;">{{ book.title }}</a></li>
+                        {%endfor%}
+                    </ul>
                     {%if request.user.is_librarian or request.user.is_staff%}
-                    <a style="margin-top: 9px" class="btn btn-outline-dark" href="{%url 'update_genre_view' name=genre.name%}">Update</a>
-                    <a style="margin-top: 9px" class="btn btn-outline-dark" href="{%url 'delete_genre_view' name=genre.name%}">Delete</a>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-top: 15px;">
+                        <a href="{% url 'update_genre_view' name=genre.name %}" class="btn btn-outline-dark" style="color: white;">Update</a>
+                        <a href="{% url 'delete_genre_view' name=genre.name %}" class="btn btn-outline-danger" style="color: white; margin-left: 10px;">Delete</a>
+                    </div>
                     {%endif%}
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 {%endblock%}

@@ -5,7 +5,7 @@ Profile | Library
 {%endblock%}
 
 {%block name%}
-<b>Profile | Library</b>
+<b style="font-size: 20px;">Profile | Library</b>
 {%endblock%}
 
 
@@ -13,32 +13,38 @@ Profile | Library
 <div class="container mt-5">
     <div class="row">
         <div class="col-md-8 mx-auto">
-            <div class="card">
+            <div class="card" style="border-color: #ccc; background-color: #2b3035; color: #f5f5f5;">
                 <div class="card-body">
-                    <h1 class="card-title">{{user.username}}</h1>
-                    <p class="card-text"><b>Email: </b>{{user.email}}</p>
-                    <p class="card-text"><b>First Name: </b>{{user.first_name}}</p>
-                    <p class="card-text"><b>Last Name: </b>{{user.last_name}}</p>
+                    <h1 class="card-title" style="color: #808080; font-size: 40px; font-family: 'Monotype Corsiva', cursive; transform: skewX(-15deg);"><b>Username: {{user.username}}</b></h1>
+                    <p class="card-text" style="font-size: 18px;"><b>Email: </b>
+                        {%if user.email%}
+                        {{user.email}}
+                        {%else%}
+                        Email is missing
+                        {%endif%}
+                    </p>
+                    <p class="card-text" style="font-size: 18px;"><b>First Name: </b>{{user.first_name}}</p>
+                    <p class="card-text" style="font-size: 18px;"><b>Last Name: </b>{{user.last_name}}</p>
                     {%if user_requests%}
-                    <b>Requests:</b>
-                    <ul>
+                    <p style="font-size: 18px;"><b>Requests:</b></p>
+                    <ul style="font-size: 18px;">
                         {%for request in user_requests%}
-                        <li style="margin-top: 6px"><a href="{%url 'borrow_request_view' id=request.id%}">{{request}}</a></li>
+                        <li style="margin-top: 6px"><a href="{% url 'borrow_request_view' id=request.id %}" style="color: #f5f5f5;">{{request}}</a></li>
                         {%endfor%}
                     </ul>
                     {%endif%}
                     {%if user.is_librarian%}
                     {%if borrow_requests%}
-                    <b>Request to approve / decline:</b>
-                    <lu>
+                    <p style="font-size: 18px;"><b>Request to approve / decline:</b></p>
+                    <ul style="font-size: 18px;">
                         {%for request in borrow_requests%}
                         <li style="margin-top: 12px">
-                            <a>{{request}}</a>
-                            <a href="{%url 'request_approve_view' id=request.id%}" class="btn btn-outline-success">Approve</a>
-                            <a href="{%url 'request_decline_view' id=request.id%}" class="btn btn-outline-danger">Decline</a>
+                            <a style="color: #f5f5f5;">{{request}}</a>
+                            <a href="{% url 'request_approve_view' id=request.id %}" class="btn btn-outline-success" style="color: white; margin-left: 10px;">Approve</a>
+                            <a href="{% url 'request_decline_view' id=request.id %}" class="btn btn-outline-danger" style="color: white; margin-left: 10px;">Decline</a>
                         </li>
                         {%endfor%}
-                    </lu>
+                    </ul>
                     {%endif%}
                     {%endif%}
                 </div>

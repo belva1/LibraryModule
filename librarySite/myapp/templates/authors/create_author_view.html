@@ -5,7 +5,7 @@ Create author | Library
 {%endblock%}
 
 {%block name%}
-<b>Create author | Library</b>
+<b style="font-size: 20px;">Create Author | Library</b>
 {%endblock%}
 
 
@@ -31,9 +31,10 @@ Create author | Library
             </div>
         </div>
         {{form.errors}}
-        <button form="add_form" type="submit" class="btn btn-outline-secondary mt-4">Create</button>
-    </form>
+        <button form="add_form" type="submit" class="btn btn-outline-secondary mt-4" style="margin-bottom: 25px;">Create</button>
         <a class="btn btn-outline-primary" href="{%url 'main_view'%}">Cancel</a>
+    </form>
+
 </div>
 
 </body>

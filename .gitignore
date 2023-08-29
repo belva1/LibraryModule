@@ -5,4 +5,4 @@
 .idea/
 __pycache__/
 venv/
-VBproject/db.sqlite3
+librarySite/db.sqlite3

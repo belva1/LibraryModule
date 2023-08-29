@@ -183,8 +183,8 @@ class CreateNewAuthorForm(forms.Form):
 
     def clean(self):
         name = self.cleaned_data['name']
-        if len(Author.objects.filter(name=name)):
-            self.add_error('name', 'Author with this name already exist.')
+        if Author.objects.filter(name=name).exists():
+            self.add_error('name', 'Author with this name already exists.')
 
     def create_author(self):
         Author.objects.create(**self.cleaned_data)

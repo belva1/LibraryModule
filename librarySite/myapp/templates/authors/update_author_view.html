@@ -5,7 +5,7 @@ Update | Library
 {%endblock%}
 
 {%block name%}
-<b>Update | Library</b>
+<b style="font-size: 20px;">Update Author | Library</b>
 {%endblock%}
 
 
@@ -31,9 +31,10 @@ Update | Library
             </div>
         </div>
         {{form.errors}}
-        <button form="add_form" type="submit" class="btn btn-outline-secondary mt-4">Update</button>
+        <button form="add_form" type="submit" class="btn btn-outline-secondary mt-4" style="margin-bottom: 25px;">Update</button>
+        <a class="btn btn-outline-primary" href="{%url 'main_view'%}">Cancel</a>
     </form>
-    <a class="btn btn-outline-primary" href="{%url 'main_view'%}">Back</a>
+
 </div>
 
 </body>

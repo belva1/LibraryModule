@@ -5,7 +5,7 @@ Change User Data | Library
 {%endblock%}
 
 {%block name%}
-<b>Change User Data | Library</b>
+<b style="font-size: 20px;">Change User Data | Library</b>
 {%endblock%}
 
 {%block content%}
@@ -14,7 +14,7 @@ Change User Data | Library
     <form id="add_form" method="POST">
         {% csrf_token %}
         <div class="h3 mb-3 fw-normal text-nowrap">
-            Change Data
+            Change User Data
         </div>
         <div class="form-group" style="margin-bottom: 1.5rem;">
             <div class="form-floating">
@@ -40,7 +40,8 @@ Change User Data | Library
                 <label for="{{form.last_name.id_for_label}}" style="font-size: 80%;">{{form.last_name.label}}</label>
             </div>
         </div>
-        <button form="add_form" type="submit" class="btn btn-outline-secondary mt-4">Submit</button>
+        <button form="add_form" type="submit" class="btn btn-outline-secondary mt-4" style="margin-bottom: 25px;">Submit</button>
+        <a class="btn btn-outline-primary" href="{%url 'main_view'%}">Cancel</a>
     </form>
 </div>
 
