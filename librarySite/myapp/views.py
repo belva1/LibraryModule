@@ -222,6 +222,8 @@ class AuthorView(DetailView):
         return self.model.objects.get(name=name)
 
 
+
+
 class CreateAuthorView(CreateView):
     model = Author
     template_name = 'authors/create_author_view.html'

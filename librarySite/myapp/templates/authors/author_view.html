@@ -17,6 +17,7 @@ Author | Library
                 <div class="card-body">
                     <p class="card-text" style="color: #808080; font-size: 40px; font-family: 'Monotype Corsiva', cursive; transform: skewX(-15deg); margin-bottom: 0;"><b >Author: {{author.name}}</b></p>
                     <p class="card-text" style="font-size: 18px; margin-top: 5px;"><b>Biography:</b><br>{{author.bio}}</p>
+
                     {%if request.user.is_librarian or request.user.is_staff%}
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-top: 15px;">
                         <a href="{% url 'update_author_view' name=author.name %}" class="btn btn-outline-dark" style="color: white;">Update</a>
