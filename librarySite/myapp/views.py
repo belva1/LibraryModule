@@ -1,9 +1,8 @@
 from datetime import timedelta
 
 from django.contrib.auth import login, logout
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.shortcuts import render, redirect
-
 from django.urls import reverse_lazy, reverse
 from django.views import View
 from django.views.generic import CreateView, ListView, DetailView
@@ -221,7 +220,12 @@ class AuthorView(DetailView):
         name = self.kwargs.get('name')
         return self.model.objects.get(name=name)
 
-
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        cur_author = self.get_object()
+        context['books'] = Book.objects.filter(authors=cur_author)
+        context['author'] = cur_author
+        return context
 
 
 class CreateAuthorView(CreateView):
@@ -378,7 +382,18 @@ class DeleteBookView(View):
         return HttpResponseRedirect(url)
 
 
-# VIEWS FOR BORROW REQUEST FUNCTIONALITY(BORROW REQUEST VIEW, APPROVE, DECLINE)
+# VIEWS FOR BORROW REQUEST FUNCTIONALITY(REQUESTS / BORROW REQUEST VIEW, APPROVE, DECLINE)
+class RequestsView(ListView):
+    template_name = 'user/requests_view.html'
+    model = BorrowRequestModel
+    context_object_name = 'requests'
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated or not (request.user.is_librarian or request.user.is_staff):
+            return redirect('main_view')
+        return super().dispatch(request, *args, **kwargs)
+
+
 class BorrowRequestView(DetailView):
     template_name = 'user/borrow_request_view.html'
     model = BorrowRequestModel
@@ -407,6 +422,9 @@ class RequestApproveView(View):
     def get(self, request, *args, **kwargs):
         id = kwargs['id']
         book_request = self.model.objects.get(id=id)
+        if not request.user.is_authenticated or not request.user.is_librarian:
+            url = reverse('main_view')
+            return HttpResponseRedirect(url)
         book_request.status = 2
         book_request.approval_date = timezone.now().date()
         book_request.save()
@@ -420,6 +438,9 @@ class RequestDeclineView(View):
     def get(self, request, *args, **kwargs):
         id = kwargs['id']
         book_request = self.model.objects.get(id=id)
+        if not request.user.is_authenticated or not request.user.is_librarian:
+            url = reverse('main_view')
+            return HttpResponseRedirect(url)
         book_request.status = 5
         book_request.save()
 
@@ -433,6 +454,9 @@ class TakeBookView(View):
     def get(self, request, *args, **kwargs):
         id = self.kwargs['id']
         borrow_request = self.model.objects.get(id=id)
+        if not request.user.is_authenticated or borrow_request.borrower != request.user:
+            url = reverse('main_view')
+            return HttpResponseRedirect(url)
         if borrow_request.status != 2:
             return redirect('book_detail_view', isbn=borrow_request.book.isbn)
         else:
@@ -454,6 +478,9 @@ class ReturnBookView(View):
     def get(self, request, *args, **kwargs):
         id = self.kwargs['id']
         borrow_request = self.model.objects.get(id=id)
+        if not request.user.is_authenticated or borrow_request.borrower != request.user:
+            url = reverse('main_view')
+            return HttpResponseRedirect(url)
         if borrow_request.status != 3:
             return redirect('book_detail_view', isbn=borrow_request.book.isbn)
         else:
@@ -468,14 +495,3 @@ class ReturnBookView(View):
             book.save()
 
         return redirect('profile_view', username=request.user.username)
-
-
-
-
-
-
-
-
-
-
-

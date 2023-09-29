@@ -47,6 +47,12 @@ Profile | Library
                     </ul>
                     {%endif%}
                     {%endif%}
+                    {%if user.is_librarian or user.is_staff%}
+                    <div style="text-align: right;" class="float-right">
+                        <a href="{%url 'requests_view'%}" style="color: #808080; font-size: 25px; font-family: 'Monotype Corsiva', cursive; transform: skewX(-15deg);">List of requests</a>
+                    </div>
+                    {%endif%}
+
                 </div>
             </div>
         </div>

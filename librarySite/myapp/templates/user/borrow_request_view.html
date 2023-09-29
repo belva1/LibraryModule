@@ -21,12 +21,20 @@ Request | Library
                     <b style="color: red">Request declined</b>
                     {% else %}
                         {% if borrow_request.status == 1 %}
+                        {%if user.is_librarian or user.is_staff%}
+                        <b>The librarian must approve / decline the book.</b>
+                        {%else%}
                         <b>Please, wait for approve or decline.</b>
+                        {%endif%}
                         {% elif borrow_request.status == 2 %}
                         <b>You can take book: <a href="{% url 'book_detail_view' isbn=borrow_request.book.isbn %}" style="color: white;">{{ borrow_request.book }}</a></b>
                         {% elif borrow_request.status == 3 %}
+                        {%if user.is_librarian or user.is_staff%}
+                        <b>The book was taken.</b>
+                        {%else%}
                         <p><b>You have the book, enjoy reading!</b></p>
                         <a style="margin-bottom: 16px; color: white;" href="{% url 'return_book_view' id=borrow_request.id %}" class="btn btn-outline-secondary">Return book</a>
+                        {%endif%}
                         {% elif borrow_request.status == 4 %}
                             {% if not borrow_request.overdue %}
                             <b style="color: green">Request completed in time.</b>
@@ -58,4 +66,4 @@ Request | Library
         </div>
     </div>
 </div>
-{% endblock %}
+{%endblock%}

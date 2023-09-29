@@ -1,4 +1,4 @@
-from .models import Genre, Author
+from .models import Genre, Author, BorrowRequestModel
 
 
 def genres(request):

@@ -19,6 +19,7 @@ urlpatterns = [
     path('genre/delete-genre/<str:name>/', views.DeleteGenreView.as_view(), name='delete_genre_view'),
     path('genre/<str:name>/', views.GenreView.as_view(), name='genre_view'),
 
+    path('requests/', views.RequestsView.as_view(), name='requests_view'),
     path('borrow/<str:isbn>/', views.CreateBorrowRequestView.as_view(), name='create_borrow_request_view'),
     path('check-borrow/<str:id>/', views.BorrowRequestView.as_view(), name='borrow_request_view'),
     path('request-decline/<str:id>/', views.RequestDeclineView.as_view(), name='request_decline_view'),
