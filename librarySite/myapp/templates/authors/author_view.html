@@ -1,0 +1,43 @@
+{%extends 'base.html'%}
+
+{%block title%}
+Author | Library
+{%endblock%}
+
+{%block name%}
+<b style="font-size: 20px;">Author | Library</b>
+{%endblock%}
+
+
+{%block content%}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card" style="border-color: #ccc; background-color: #2b3035; color: #f5f5f5;">
+                <div class="card-body">
+                    <p class="card-text" style="color: #808080; font-size: 40px; font-family: 'Monotype Corsiva', cursive; transform: skewX(-15deg); margin-bottom: 0;"><b >Author: {{author.name}}</b></p>
+                    <p class="card-text" style="font-size: 18px; margin-top: 5px;"><b>Biography:</b><br>{{author.bio}}</p>
+                    {%if not books%}
+                    <b class="card-text">There are no books written by this author.</b>
+                    {%else%}
+                    <p class="card-text" style="font-size: 18px; margin-top: 15px;"><b>Books written by this author:</b></p>
+                    <ul class="list-group">
+                        {%for book in books%}
+                        <li class="list-group-item" style="background-color: #2b3035; color: #f5f5f5; border-color: #2b3035;"><a href="{% url 'book_detail_view' isbn=book.isbn %}" style="color: #f5f5f5;">{{book.title}}</a></li>
+                        {%endfor%}
+                    </ul>
+                    {%endif%}
+                    {%if request.user.is_librarian or request.user.is_staff%}
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-top: 15px;">
+                        <a href="{% url 'update_author_view' name=author.name %}" class="btn btn-outline-dark" style="color: white;">Update</a>
+                        <a href="{% url 'delete_author_view' name=author.name %}" class="btn btn-outline-danger" style="color: white; margin-left: 10px;">Delete</a>
+                    </div>
+                    {%endif%}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock%}
+
+

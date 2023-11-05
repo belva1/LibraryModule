@@ -1,0 +1,42 @@
+{%extends 'base.html'%}
+
+{%block title%}
+Create author | Library
+{%endblock%}
+
+{%block name%}
+<b style="font-size: 20px;">Create Author | Library</b>
+{%endblock%}
+
+
+{%block content%}
+<body style="background-color: #f8f9fa;">
+
+<div class="container" style="margin-top: 5rem; border: 1px solid #ddd; padding: 20px; border-radius: 10px; box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);">
+    <form id="add_form" method="POST">
+        {% csrf_token %}
+        <div class="h3 mb-3 fw-normal text-nowrap">
+            Create Author
+        </div>
+        <div class="form-group" style="margin-bottom: 1.5rem;">
+            <div class="form-floating">
+                {{form.name}}
+                <label for="name">{{form.name.label}}</label>
+            </div>
+        </div>
+        <div class="form-group" style="margin-bottom: 1.5rem;">
+            <div class="form-floating">
+                {{form.bio}}
+                <label for="bio">{{form.bio.label}}</label>
+            </div>
+        </div>
+        {{form.errors}}
+        <button form="add_form" type="submit" class="btn btn-outline-secondary mt-4" style="margin-bottom: 25px;">Create</button>
+        <a class="btn btn-outline-primary" href="{%url 'main_view'%}">Cancel</a>
+    </form>
+
+</div>
+
+</body>
+
+{%endblock%}
